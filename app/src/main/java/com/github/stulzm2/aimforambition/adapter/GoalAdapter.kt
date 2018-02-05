@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.github.stulzm2.aimforambition.MainActivity
 import com.github.stulzm2.aimforambition.R
+import com.github.stulzm2.aimforambition.R.id.card_goal_text
 import com.github.stulzm2.aimforambition.models.Goal
 
 /**
@@ -40,15 +41,18 @@ class GoalAdapter(private val context: Context, goalList: List<Goal>) : Recycler
         val alert = AlertDialog.Builder(context)
         with(alert) {
             setTitle("Clicked on item $position")
+            setMessage("Goal text")
 
             setPositiveButton("OK") {
                 dialog, _ ->
                 dialog.dismiss()
+                Snackbar.make(view, "OK button was pressed", Snackbar.LENGTH_SHORT).show()
             }
 
             setNegativeButton("NO") {
                 dialog, _ ->
                 dialog.dismiss()
+                Snackbar.make(view, "NO button was pressed", Snackbar.LENGTH_SHORT).show()
             }
         }
 
