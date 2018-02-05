@@ -100,7 +100,7 @@
             android:layout_marginTop="30dp"
             android:onClick="showDialog"
             android:text="END DATE"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/button_add_goal"

@@ -28,7 +28,7 @@ class GoalActivity : AppCompatActivity() {
             if (isChecked) {
                 button_dialog.visibility = View.VISIBLE
             } else {
-                button_dialog.visibility = View.INVISIBLE
+                button_dialog.visibility = View.GONE
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.github.stulzm2.aimforambition
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         layoutManager = LinearLayoutManager(this)
         recycler_view.layoutManager = layoutManager
 
-        adapter = GoalAdapter(goalList = listGoals)
+        adapter = GoalAdapter(this@MainActivity, goalList = listGoals)
         recycler_view.adapter = adapter
     }
 
