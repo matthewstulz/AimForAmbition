@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.github.stulzm2.aimforambition.R
+import com.github.stulzm2.aimforambition.models.Goal
 
 /**
  * Created by matthewstulz on 2/4/18.
  */
-class GoalAdapter : RecyclerView.Adapter<GoalAdapter.ViewHolder>() {
+class GoalAdapter(goalList: List<Goal>) : RecyclerView.Adapter<GoalAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -43,7 +44,7 @@ class GoalAdapter : RecyclerView.Adapter<GoalAdapter.ViewHolder>() {
         return titles.size
     }
 
-    private val titles = arrayOf("Goal One",
+    private val titles = arrayOf("Goal One Goal One Goal One Goal One Goal One Goal One Goal One Goal One",
             "Goal Two", "Goal Three", "Goal Four",
             "Goal Five", "Goal Six", "Goal Seven",
             "Goal Eight")

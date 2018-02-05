@@ -9,8 +9,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.github.stulzm2.aimforambition.adapter.GoalAdapter
+import com.github.stulzm2.aimforambition.goals.DialogHandler
 import com.github.stulzm2.aimforambition.goals.GoalActivity
+import com.github.stulzm2.aimforambition.models.Goal
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -18,33 +21,33 @@ class MainActivity : AppCompatActivity() {
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<GoalAdapter.ViewHolder>? = null
+    var listGoals: List<Goal> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
 
+        initViews()
+        initOperations()
+    }
+
+    private fun initViews() {
         collapsing_toolbar.title = "AimForAmbition"
-        collapsing_toolbar.setContentScrimColor(Color.parseColor("#FFFFFF"))
+        collapsing_toolbar.setContentScrimColor(Color.parseColor("#3F51B5"))
+        setSupportActionBar(toolbar)
 
         layoutManager = LinearLayoutManager(this)
         recycler_view.layoutManager = layoutManager
 
-        adapter = GoalAdapter()
+        adapter = GoalAdapter(goalList = listGoals)
         recycler_view.adapter = adapter
-
-        fab_goal_intent.setOnClickListener { view ->
-            addGoal()
-            /*
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-                    */
-        }
     }
 
-    private fun addGoal() {
-        val intent = Intent(this, GoalActivity::class.java)
-        startActivity(intent)
+    private fun initOperations() {
+        fab_goal_intent.setOnClickListener {
+            val intent = Intent(this, GoalActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

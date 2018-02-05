@@ -78,7 +78,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <Switch
-            android:id="@+id/simpleSwitch"
+            android:id="@+id/simpleswitch_deadline"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:switchMinWidth="50dp"
@@ -88,9 +88,22 @@
             android:checked="false"
             android:gravity="start"
             android:textOff="@string/off"
-            android:textOn="@string/on"/>
+            android:textOn="@string/on" />
 
         <Button
+            android:id="@+id/button_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
+            android:layout_marginTop="30dp"
+            android:onClick="showDialog"
+            android:text="END DATE"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/button_add_goal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="28dp"
