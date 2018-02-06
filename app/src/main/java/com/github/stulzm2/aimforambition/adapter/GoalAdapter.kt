@@ -1,81 +1,52 @@
 package com.github.stulzm2.aimforambition.adapter
 
-import android.app.AlertDialog
 import android.content.Context
-import android.support.design.widget.Snackbar
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import com.github.stulzm2.aimforambition.MainActivity
 import com.github.stulzm2.aimforambition.R
-import com.github.stulzm2.aimforambition.R.id.card_goal_text
+import com.github.stulzm2.aimforambition.goals.GoalActivity
 import com.github.stulzm2.aimforambition.models.Goal
+import java.util.ArrayList
 
 /**
  * Created by matthewstulz on 2/4/18.
  */
-class GoalAdapter(private val context: Context, goalList: List<Goal>) : RecyclerView.Adapter<GoalAdapter.ViewHolder>() {
+class GoalAdapter(goalList: List<Goal>, private var context: Context) : RecyclerView.Adapter<GoalAdapter.TaskViewHolder>() {
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    internal var goalList: List<Goal> = ArrayList()
+    init {
+        this.goalList = goalList
+    }
 
-        var itemTitle: TextView
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.card_goal, parent, false)
+        return TaskViewHolder(view)
+    }
 
-        init {
-            itemTitle = itemView.findViewById(R.id.card_goal_text)
+    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
+        val goals = goalList[position]
+        holder.title.text = goals.title
+        holder.description.text = goals.description
 
-            itemView.setOnClickListener { v: View ->
-                var position: Int = getAdapterPosition()
-
-                displayAlert(v, position)
-
-//                Snackbar.make(v, "Click detected on item $position",
-//                        Snackbar.LENGTH_LONG).setAction("Action", null).show()
-            }
+        holder.itemView.setOnClickListener {
+            val i = Intent(context, GoalActivity::class.java)
+            i.putExtra("Mode", "E")
+            i.putExtra("Id", goals.id)
+            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(i)
         }
-    }
-
-    fun displayAlert(view: View, position: Int) {
-        val alert = AlertDialog.Builder(context)
-        with(alert) {
-            setTitle("Clicked on item $position")
-            setMessage("Goal text")
-
-            setPositiveButton("OK") {
-                dialog, _ ->
-                dialog.dismiss()
-                Snackbar.make(view, "OK button was pressed", Snackbar.LENGTH_SHORT).show()
-            }
-
-            setNegativeButton("NO") {
-                dialog, _ ->
-                dialog.dismiss()
-                Snackbar.make(view, "NO button was pressed", Snackbar.LENGTH_SHORT).show()
-            }
-        }
-
-        val dialog = alert.create()
-        dialog.show()
-    }
-
-    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
-        val v = LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.card_goal, viewGroup, false)
-        return ViewHolder(v)
-    }
-
-    override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        viewHolder.itemTitle.text = titles[i]
     }
 
     override fun getItemCount(): Int {
-        return titles.size
+        return goalList.size
     }
 
-    private val titles = arrayOf("Goal One Goal One Goal One Goal One Goal One Goal One Goal One Goal One",
-            "Goal Two", "Goal Three", "Goal Four",
-            "Goal Five", "Goal Six", "Goal Seven",
-            "Goal Eight")
+    inner class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var title: TextView = view.findViewById(R.id.card_goal_text) as TextView
+        var description: TextView = view.findViewById(R.id.card_goal_description) as TextView
+    }
 }

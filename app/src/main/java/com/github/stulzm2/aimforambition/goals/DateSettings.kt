@@ -17,6 +17,8 @@ class DateSettings : DatePickerDialog.OnDateSetListener {
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        Toast.makeText(con,"Selected Date : "+dayOfMonth+" / "+month+" / "+year, Toast.LENGTH_LONG).show()
+        val newMonth = month + 1
+        Toast.makeText(con,"Selected Date : "+newMonth+" / "+dayOfMonth+" / "+year, Toast.LENGTH_LONG).show()
+
     }
 }

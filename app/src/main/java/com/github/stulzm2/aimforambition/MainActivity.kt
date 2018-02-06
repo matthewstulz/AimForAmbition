@@ -8,10 +8,12 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.github.stulzm2.aimforambition.adapter.GoalAdapter
+import com.github.stulzm2.aimforambition.database.DatabaseHandler
 import com.github.stulzm2.aimforambition.goals.DialogHandler
 import com.github.stulzm2.aimforambition.goals.GoalActivity
 import com.github.stulzm2.aimforambition.models.Goal
@@ -20,50 +22,69 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<GoalAdapter.ViewHolder>? = null
-    var listGoals: List<Goal> = ArrayList()
+    var taskRecyclerAdapter: GoalAdapter? = null;
+    var recyclerView: RecyclerView? = null
+    var dbHandler: DatabaseHandler? = null
+    var listTasks: List<Goal> = ArrayList<Goal>()
+    var linearLayoutManager: LinearLayoutManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         initViews()
         initOperations()
+        //initDB()
     }
 
-    private fun initViews() {
-        collapsing_toolbar.title = "AimForAmbition"
-        collapsing_toolbar.setContentScrimColor(Color.parseColor("#3F51B5"))
+    fun initDB() {
+        dbHandler = DatabaseHandler(this)
+        listTasks = (dbHandler as DatabaseHandler).task()
+        taskRecyclerAdapter = GoalAdapter(goalList = listTasks, context = applicationContext)
+        (recyclerView as RecyclerView).adapter = taskRecyclerAdapter
+    }
+
+    fun initViews() {
+        val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-
-        layoutManager = LinearLayoutManager(this)
-        recycler_view.layoutManager = layoutManager
-
-        adapter = GoalAdapter(this@MainActivity, goalList = listGoals)
-        recycler_view.adapter = adapter
+        recyclerView = findViewById(R.id.recycler_view) as RecyclerView
+        taskRecyclerAdapter = GoalAdapter(goalList = listTasks, context = applicationContext)
+        linearLayoutManager = LinearLayoutManager(applicationContext)
+        (recyclerView as RecyclerView).layoutManager = linearLayoutManager
     }
 
-    private fun initOperations() {
-        fab_goal_intent.setOnClickListener {
-            val intent = Intent(this, GoalActivity::class.java)
-            startActivity(intent)
+    fun initOperations() {
+        fab_goal_intent?.setOnClickListener { view ->
+            val i = Intent(applicationContext, GoalActivity::class.java)
+            i.putExtra("Mode", "A")
+            startActivity(i)
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        val id = item.itemId
+        if (id == R.id.action_delete) {
+            val dialog = android.support.v7.app.AlertDialog.Builder(this).setTitle("Info").setMessage("Click 'YES' Delete All Goal")
+                    .setPositiveButton("YES", { dialog, i ->
+                        dbHandler!!.deleteAllTasks()
+                        initDB()
+                        dialog.dismiss()
+                    })
+                    .setNegativeButton("NO", { dialog, i ->
+                        dialog.dismiss()
+                    })
+            dialog.show()
+            return true
         }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initDB()
     }
 }

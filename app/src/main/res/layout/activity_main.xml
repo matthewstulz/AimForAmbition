@@ -19,9 +19,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@mipmap/ic_launcher"
         app:layout_anchor="@id/recycler_view"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:layout_anchorGravity="bottom|right|end"
+        android:src="@drawable/ic_add"
+        android:tint="@android:color/white"/>
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
