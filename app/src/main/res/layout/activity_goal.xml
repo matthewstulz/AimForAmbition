@@ -45,6 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_marginTop="20dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.design.widget.TextInputLayout
@@ -90,38 +91,46 @@
             android:textOff="@string/off"
             android:textOn="@string/on" />
 
-        <Button
-            android:id="@+id/button_dialog"
+        <TextView
+            android:id="@+id/textview_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="28dp"
-            android:layout_marginRight="28dp"
-            android:layout_marginTop="30dp"
-            android:onClick="showDialog"
-            android:text="END DATE"
-            android:visibility="gone"/>
+            android:gravity="end"
+            android:textSize="20sp"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"/>
 
-        <Button
-            android:id="@+id/button_delete_goal"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="28dp"
-            android:layout_marginRight="28dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/delete_goal"
-            android:layout_gravity="end"
-            android:visibility="gone"/>
+            android:layout_margin="20dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
 
-        <Button
-            android:id="@+id/button_add_goal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="28dp"
-            android:layout_marginRight="28dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/add_goal"
-            android:layout_gravity="end"/>
+            <Button
+                android:id="@+id/button_delete_goal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/delete_goal"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/button_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="END DATE"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/button_add_goal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/add_goal"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -1,14 +1,18 @@
 package com.github.stulzm2.aimforambition.goals
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
+import android.widget.DatePicker
 import com.github.stulzm2.aimforambition.R
 import com.github.stulzm2.aimforambition.database.DatabaseHandler
 import com.github.stulzm2.aimforambition.models.Goal
 import kotlinx.android.synthetic.main.activity_goal.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by matthewstulz on 2/4/18.
@@ -17,6 +21,7 @@ class GoalActivity : AppCompatActivity() {
 
     var dbHandler: DatabaseHandler? = null
     var isEditMode = false
+    var cal = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,14 +43,9 @@ class GoalActivity : AppCompatActivity() {
         }
     }
 
-    fun showDialog(view: View) {
-        var dh = DialogHandler()
-        dh.show(supportFragmentManager,"date_picker")
-    }
-
     private fun initDB() {
         dbHandler = DatabaseHandler(this)
-        button_delete_goal.visibility = View.INVISIBLE
+        button_delete_goal.visibility = View.GONE
         collapsing_toolbar_goal.title = "New Goal"
         if (intent != null && intent.getStringExtra("Mode") == "E") {
             isEditMode = true
@@ -93,6 +93,30 @@ class GoalActivity : AppCompatActivity() {
                     })
             dialog.show()
         })
+
+        textview_date!!.text = "--/--/----"
+
+        val dateSetListener = object : DatePickerDialog.OnDateSetListener {
+            override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
+                                   dayOfMonth: Int) {
+                cal.set(Calendar.YEAR, year)
+                cal.set(Calendar.MONTH, monthOfYear)
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                updateDateInView()
+            }
+        }
+
+        button_dialog!!.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(view: View) {
+                DatePickerDialog(this@GoalActivity,
+                        dateSetListener,
+                        // selects today's date when it loads up
+                        cal.get(Calendar.YEAR),
+                        cal.get(Calendar.MONTH),
+                        cal.get(Calendar.DAY_OF_MONTH)).show()
+            }
+
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -102,5 +126,11 @@ class GoalActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun updateDateInView() {
+        val myFormat = "MM/dd/yyyy" // format of time
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+        textview_date!!.text = sdf.format(cal.getTime())
     }
 }
