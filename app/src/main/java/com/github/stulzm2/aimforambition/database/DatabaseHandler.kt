@@ -19,10 +19,11 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
         private val TABLE_NAME = "Goals"
         private val COLUMN_ID = "Id"
         private val COLUMN_TITLE = "Title"
-        private val COLUMN_DESCRIPTION = "Description" }
+        private val COLUMN_DESCRIPTION = "Description"
+        private val COLUMN_DATE = "Date"}
 
     override fun onCreate(db: SQLiteDatabase) {
-        val CREATE_TABLE = "CREATE TABLE $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY, $COLUMN_TITLE TEXT, $COLUMN_DESCRIPTION TEXT)"
+        val CREATE_TABLE = "CREATE TABLE $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY, $COLUMN_TITLE TEXT, $COLUMN_DESCRIPTION TEXT, $COLUMN_DATE)"
         db.execSQL(CREATE_TABLE)
     }
 
@@ -32,17 +33,18 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
         onCreate(db)
     }
 
-    fun addTask(goal: Goal): Boolean {
+    fun addGoal(goal: Goal): Boolean {
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(COLUMN_TITLE, goal.title)
         values.put(COLUMN_DESCRIPTION, goal.description)
+        values.put(COLUMN_DATE, goal.date)
         val _success = db.insert(TABLE_NAME, null, values)
         db.close()
         return (Integer.parseInt("$_success") != -1)
     }
 
-    fun getTask(_id: Int): Goal {
+    fun getGoal(_id: Int): Goal {
         val goals = Goal()
         val db = writableDatabase
         val selectQuery = "SELECT  * FROM $TABLE_NAME WHERE $COLUMN_ID = $_id"
@@ -52,11 +54,12 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
         goals.id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_ID)))
         goals.title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
         goals.description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
+        goals.date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
         cursor.close()
         return goals
     }
 
-    fun task(): List<Goal> {
+    fun goal(): List<Goal> {
         val taskList = ArrayList<Goal>()
         val db = writableDatabase
         val selectQuery = "SELECT  * FROM $TABLE_NAME"
@@ -68,6 +71,7 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
                     goals.id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_ID)))
                     goals.title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
                     goals.description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
+                    goals.date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
                     taskList.add(goals)
                 } while (cursor.moveToNext())
             }
@@ -76,24 +80,25 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
         return taskList
     }
 
-    fun updateTask(goal: Goal): Boolean {
+    fun updateGoal(goal: Goal): Boolean {
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(COLUMN_TITLE, goal.title)
         values.put(COLUMN_DESCRIPTION, goal.description)
+        values.put(COLUMN_DATE, goal.date)
         val _success = db.update(TABLE_NAME, values, COLUMN_ID + "=?", arrayOf(goal.id.toString())).toLong()
         db.close()
         return Integer.parseInt("$_success") != -1
     }
 
-    fun deleteTask(_id: Int): Boolean {
+    fun deleteGoal(_id: Int): Boolean {
         val db = this.writableDatabase
         val _success = db.delete(TABLE_NAME, COLUMN_ID + "=?", arrayOf(_id.toString())).toLong()
         db.close()
         return Integer.parseInt("$_success") != -1
     }
 
-    fun deleteAllTasks(): Boolean {
+    fun deleteAllGoals(): Boolean {
         val db = this.writableDatabase
         val _success = db.delete(TABLE_NAME, null, null).toLong()
         db.close()

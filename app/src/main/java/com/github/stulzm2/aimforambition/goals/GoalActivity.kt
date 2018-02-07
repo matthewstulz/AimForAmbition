@@ -19,9 +19,9 @@ import java.util.*
  */
 class GoalActivity : AppCompatActivity() {
 
-    var dbHandler: DatabaseHandler? = null
-    var isEditMode = false
-    var cal = Calendar.getInstance()
+    private var dbHandler: DatabaseHandler? = null
+    private var isEditMode = false
+    private var cal = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,6 @@ class GoalActivity : AppCompatActivity() {
         isChecked()
         initDB()
         initOperations()
-
     }
 
     fun isChecked() {
@@ -46,14 +45,21 @@ class GoalActivity : AppCompatActivity() {
     private fun initDB() {
         dbHandler = DatabaseHandler(this)
         button_delete_goal.visibility = View.GONE
-        collapsing_toolbar_goal.title = "New Goal"
+        supportActionBar?.title = "New Goal"
+//        toolbar_goal.title = "New Goal"
+        textview_date!!.text = "--/--/----"
         if (intent != null && intent.getStringExtra("Mode") == "E") {
             isEditMode = true
-            collapsing_toolbar_goal.title = "Edit Goal"
-            val goal: Goal = dbHandler!!.getTask(intent.getIntExtra("Id",0))
+            supportActionBar?.title = "Edit Goal"
+//            toolbar_goal.title = "Edit Goal"
+            val goal: Goal = dbHandler!!.getGoal(intent.getIntExtra("Id",0))
             textinput_goal.setText(goal.title)
             textinput_description.setText(goal.description)
+            textview_date.text = goal.date
 
+            simpleswitch_deadline.isChecked = true
+            button_add_goal.text = "SAVE\nGOAL"
+            button_dialog.text = "CHANGE\nDATE"
             button_delete_goal.visibility = View.VISIBLE
         }
     }
@@ -65,15 +71,17 @@ class GoalActivity : AppCompatActivity() {
                 val goal = Goal()
                 goal.title = textinput_goal.text.toString()
                 goal.description = textinput_description.text.toString()
+                goal.date = textview_date.text.toString()
 
-                success = dbHandler?.addTask(goal) as Boolean
+                success = dbHandler?.addGoal(goal) as Boolean
             } else {
-                val tasks = Goal()
-                tasks.id = intent.getIntExtra("Id", 0)
-                tasks.title = textinput_goal.text.toString()
-                tasks.description = textinput_description.text.toString()
+                val goal = Goal()
+                goal.id = intent.getIntExtra("Id", 0)
+                goal.title = textinput_goal.text.toString()
+                goal.description = textinput_description.text.toString()
+                goal.date = textview_date.text.toString()
 
-                success = dbHandler?.updateTask(tasks) as Boolean
+                success = dbHandler?.updateGoal(goal) as Boolean
             }
 
             if (success)
@@ -81,42 +89,34 @@ class GoalActivity : AppCompatActivity() {
         })
 
         button_delete_goal.setOnClickListener({
-            val dialog = AlertDialog.Builder(this).setTitle("Info").setMessage("Click 'YES' Delete the Task.")
-                    .setPositiveButton("YES", { dialog, i ->
-                        val success = dbHandler?.deleteTask(intent.getIntExtra("Id", 0)) as Boolean
+            val dialog = AlertDialog.Builder(this).setTitle("DANGER ZONE!").setMessage("Click 'YES' to delete the goal.")
+                    .setPositiveButton("YES", { dialog, _ ->
+                        val success = dbHandler?.deleteGoal(intent.getIntExtra("Id", 0)) as Boolean
                         if (success)
                             finish()
                         dialog.dismiss()
                     })
-                    .setNegativeButton("NO", { dialog, i ->
+                    .setNegativeButton("NO", { dialog, _ ->
                         dialog.dismiss()
                     })
             dialog.show()
         })
 
-        textview_date!!.text = "--/--/----"
-
-        val dateSetListener = object : DatePickerDialog.OnDateSetListener {
-            override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
-                                   dayOfMonth: Int) {
-                cal.set(Calendar.YEAR, year)
-                cal.set(Calendar.MONTH, monthOfYear)
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                updateDateInView()
-            }
+        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            cal.set(Calendar.YEAR, year)
+            cal.set(Calendar.MONTH, monthOfYear)
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            updateDateInView()
         }
 
-        button_dialog!!.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View) {
-                DatePickerDialog(this@GoalActivity,
-                        dateSetListener,
-                        // selects today's date when it loads up
-                        cal.get(Calendar.YEAR),
-                        cal.get(Calendar.MONTH),
-                        cal.get(Calendar.DAY_OF_MONTH)).show()
-            }
-
-        })
+        button_dialog!!.setOnClickListener {
+            DatePickerDialog(this@GoalActivity,
+                    dateSetListener,
+                    // selects today's date when it loads up
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)).show()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -131,6 +131,6 @@ class GoalActivity : AppCompatActivity() {
     private fun updateDateInView() {
         val myFormat = "MM/dd/yyyy" // format of time
         val sdf = SimpleDateFormat(myFormat, Locale.US)
-        textview_date!!.text = sdf.format(cal.getTime())
+        textview_date!!.text = sdf.format(cal.time)
     }
 }

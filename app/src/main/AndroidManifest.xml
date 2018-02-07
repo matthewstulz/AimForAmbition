@@ -22,8 +22,7 @@
         <activity
             android:name=".goals.GoalActivity"
             android:label="New Goal"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.ActionBar.TitleTextStyle"/>
     </application>
 
 </manifest>

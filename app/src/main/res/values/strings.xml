@@ -4,8 +4,10 @@
     <string name="action_delete">Delete All</string>
     <string name="on">on</string>
     <string name="off">off</string>
-    <string name="add_goal">ADD GOAL</string>
-    <string name="delete_goal">DELETE GOAL</string>
+    <string name="add_goal">ADD\nGOAL</string>
+    <string name="delete_goal">DELETE\nGOAL</string>
+    <string name="change_date">CHANGE\NDATE</string>
+    <string name="switch_deadline">END\nDATE</string>
     <string name="goal_deadline">Goal Deadline</string>
     <string name="enter_goal">Enter goal</string>
     <string name="enter_description">Enter description</string>

@@ -31,24 +31,24 @@ class MainActivity : AppCompatActivity() {
         //initDB()
     }
 
-    fun initDB() {
+    private fun initDB() {
         dbHandler = DatabaseHandler(this)
-        listTasks = (dbHandler as DatabaseHandler).task()
+        listTasks = (dbHandler as DatabaseHandler).goal()
         taskRecyclerAdapter = GoalAdapter(goalList = listTasks, context = applicationContext)
         (recyclerView as RecyclerView).adapter = taskRecyclerAdapter
     }
 
-    fun initViews() {
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
+    private fun initViews() {
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        recyclerView = findViewById(R.id.recycler_view) as RecyclerView
+        recyclerView = findViewById(R.id.recycler_view)
         taskRecyclerAdapter = GoalAdapter(goalList = listTasks, context = applicationContext)
         linearLayoutManager = LinearLayoutManager(applicationContext)
         (recyclerView as RecyclerView).layoutManager = linearLayoutManager
     }
 
-    fun initOperations() {
-        fab_goal_intent?.setOnClickListener { view ->
+    private fun initOperations() {
+        fab_goal_intent?.setOnClickListener { _ ->
             val i = Intent(applicationContext, GoalActivity::class.java)
             i.putExtra("Mode", "A")
             startActivity(i)
@@ -63,9 +63,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.action_delete) {
-            val dialog = android.support.v7.app.AlertDialog.Builder(this).setTitle("Info").setMessage("Click 'YES' Delete All Goal")
+            val dialog = android.support.v7.app.AlertDialog.Builder(this).setTitle("DANGER ZONE!").setMessage("Click 'YES' to delete all goals")
                     .setPositiveButton("YES", { dialog, i ->
-                        dbHandler!!.deleteAllTasks()
+                        dbHandler!!.deleteAllGoals()
                         initDB()
                         dialog.dismiss()
                     })

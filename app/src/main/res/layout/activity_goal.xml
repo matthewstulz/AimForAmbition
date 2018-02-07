@@ -5,41 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
     tools:context="com.github.stulzm2.aimforambition.goals.GoalActivity">
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar_goal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginStart="48dp"
-            app:expandedTitleMarginEnd="64dp">
-
-            <ImageView
-                android:id="@+id/backdrop"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax" />
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:layout_collapseMode="pin"/>
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,13 +20,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/textinputlayout_goal"
             android:layout_margin="12dp"
-            app:hintTextAppearance="@android:style/TextAppearance.Large">
+            app:hintTextAppearance="@android:style/TextAppearance.Large"
+            android:theme="@style/TextLabel"
+            >
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textinput_goal"
-                android:hint="@string/enter_goal" />
+                android:hint="@string/enter_goal"
+                android:textSize="14sp"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -68,13 +38,15 @@
             android:layout_height="wrap_content"
             android:id="@+id/textinputlayout_description"
             android:layout_margin="12dp"
-            app:hintTextAppearance="@android:style/TextAppearance.Large">
+            app:hintTextAppearance="@android:style/TextAppearance.Large"
+            android:theme="@style/TextLabel">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textinput_description"
-                android:hint="@string/enter_description" />
+                android:hint="@string/enter_description"
+                android:textSize="14sp"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -113,24 +85,29 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="@string/delete_goal"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/colorAccent"/>
 
             <Button
                 android:id="@+id/button_dialog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="END DATE"
-                android:visibility="gone"/>
+                android:text="@string/switch_deadline"
+                android:visibility="gone"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/colorAccent"/>
 
             <Button
                 android:id="@+id/button_add_goal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="@string/add_goal"/>
+                android:text="@string/add_goal"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/colorAccent"/>
 
         </LinearLayout>
-
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
