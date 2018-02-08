@@ -39,9 +39,9 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
         values.put(COLUMN_TITLE, goal.title)
         values.put(COLUMN_DESCRIPTION, goal.description)
         values.put(COLUMN_DATE, goal.date)
-        val _success = db.insert(TABLE_NAME, null, values)
+        val result = db.insert(TABLE_NAME, null, values)
         db.close()
-        return (Integer.parseInt("$_success") != -1)
+        return "$result".toInt() != -1
     }
 
     fun getGoal(_id: Int): Goal {
@@ -86,22 +86,22 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
         values.put(COLUMN_TITLE, goal.title)
         values.put(COLUMN_DESCRIPTION, goal.description)
         values.put(COLUMN_DATE, goal.date)
-        val _success = db.update(TABLE_NAME, values, COLUMN_ID + "=?", arrayOf(goal.id.toString())).toLong()
+        val result = db.update(TABLE_NAME, values, COLUMN_ID + "=?", arrayOf(goal.id.toString())).toLong()
         db.close()
-        return Integer.parseInt("$_success") != -1
+        return "$result".toInt() != -1
     }
 
     fun deleteGoal(_id: Int): Boolean {
         val db = this.writableDatabase
-        val _success = db.delete(TABLE_NAME, COLUMN_ID + "=?", arrayOf(_id.toString())).toLong()
+        val result = db.delete(TABLE_NAME, COLUMN_ID + "=?", arrayOf(_id.toString())).toLong()
         db.close()
-        return Integer.parseInt("$_success") != -1
+        return "$result".toInt() != -1
     }
 
     fun deleteAllGoals(): Boolean {
         val db = this.writableDatabase
-        val _success = db.delete(TABLE_NAME, null, null).toLong()
+        val result = db.delete(TABLE_NAME, null, null).toLong()
         db.close()
-        return Integer.parseInt("$_success") != -1
+        return "$result".toInt() != -1
     }
 }

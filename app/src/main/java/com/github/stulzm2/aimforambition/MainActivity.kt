@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import com.github.stulzm2.aimforambition.adapter.GoalAdapter
 import com.github.stulzm2.aimforambition.database.DatabaseHandler
 import com.github.stulzm2.aimforambition.goals.GoalActivity
@@ -19,18 +18,17 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    var taskRecyclerAdapter: GoalAdapter? = null;
-    var recyclerView: RecyclerView? = null
-    var dbHandler: DatabaseHandler? = null
-    var listTasks: List<Goal> = ArrayList<Goal>()
-    var linearLayoutManager: LinearLayoutManager? = null
+    private var taskRecyclerAdapter: GoalAdapter? = null;
+    private var recyclerView: RecyclerView? = null
+    private var dbHandler: DatabaseHandler? = null
+    private var listTasks: List<Goal> = ArrayList<Goal>()
+    private var linearLayoutManager: LinearLayoutManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViews()
         initOperations()
-        //initDB()
         snackBarCheck()
     }
 

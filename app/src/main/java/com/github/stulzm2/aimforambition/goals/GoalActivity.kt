@@ -1,14 +1,13 @@
 package com.github.stulzm2.aimforambition.goals
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.CoordinatorLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import com.github.stulzm2.aimforambition.MainActivity
 import com.github.stulzm2.aimforambition.R
 import com.github.stulzm2.aimforambition.database.DatabaseHandler
@@ -25,13 +24,11 @@ class GoalActivity : AppCompatActivity() {
     private var dbHandler: DatabaseHandler? = null
     private var isEditMode = false
     private var cal = Calendar.getInstance()
-    private lateinit var coordinatorLayout: CoordinatorLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_goal)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         isChecked()
         initDB()
         initOperations()
@@ -47,16 +44,15 @@ class GoalActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initDB() {
         dbHandler = DatabaseHandler(this)
         button_delete_goal.visibility = View.GONE
         supportActionBar?.title = "New Goal"
-//        toolbar_goal.title = "New Goal"
         textview_date!!.text = "--/--/----"
         if (intent != null && intent.getStringExtra("Mode") == "E") {
             isEditMode = true
             supportActionBar?.title = "Edit Goal"
-//            toolbar_goal.title = "Edit Goal"
             val goal: Goal = dbHandler!!.getGoal(intent.getIntExtra("Id",0))
             textinput_goal.setText(goal.title)
             textinput_description.setText(goal.description)
@@ -71,7 +67,7 @@ class GoalActivity : AppCompatActivity() {
 
     private fun initOperations() {
         button_add_goal.setOnClickListener({
-            var success: Boolean
+            val success: Boolean
             if (!isEditMode) {
                 val goal = Goal()
                 goal.title = textinput_goal.text.toString()
@@ -88,7 +84,6 @@ class GoalActivity : AppCompatActivity() {
 
                 success = dbHandler?.updateGoal(goal) as Boolean
             }
-
             if (success)
                 finish()
         })
@@ -106,7 +101,6 @@ class GoalActivity : AppCompatActivity() {
                         dialog.dismiss()
                     })
             dialog.show()
-
         })
 
         val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
