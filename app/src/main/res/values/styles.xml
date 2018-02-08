@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -35,6 +35,10 @@
         <item name="colorAccent">@android:color/black</item>
         <item name="colorControlNormal">@android:color/black</item>
         <item name="colorControlActivated">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearance.Design.Snackbar.Message" parent="android:TextAppearance" tools:override="true">
+        <item name="android:textSize">20sp</item>
     </style>
 
 </resources>

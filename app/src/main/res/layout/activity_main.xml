@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/colorPrimary"
-    tools:context="com.github.stulzm2.aimforambition.MainActivity">
+    tools:context="com.github.stulzm2.aimforambition.MainActivity"
+    android:id="@+id/cl_main">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

@@ -45,22 +45,22 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
     }
 
     fun getGoal(_id: Int): Goal {
-        val goals = Goal()
+        val goal = Goal()
         val db = writableDatabase
         val selectQuery = "SELECT  * FROM $TABLE_NAME WHERE $COLUMN_ID = $_id"
         val cursor = db.rawQuery(selectQuery, null)
 
         cursor?.moveToFirst()
-        goals.id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_ID)))
-        goals.title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
-        goals.description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
-        goals.date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
+        goal.id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_ID)))
+        goal.title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
+        goal.description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
+        goal.date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
         cursor.close()
-        return goals
+        return goal
     }
 
     fun goal(): List<Goal> {
-        val taskList = ArrayList<Goal>()
+        val goalList = ArrayList<Goal>()
         val db = writableDatabase
         val selectQuery = "SELECT  * FROM $TABLE_NAME"
         val cursor = db.rawQuery(selectQuery, null)
@@ -72,12 +72,12 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
                     goals.title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
                     goals.description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
                     goals.date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
-                    taskList.add(goals)
+                    goalList.add(goals)
                 } while (cursor.moveToNext())
             }
         }
         cursor.close()
-        return taskList
+        return goalList
     }
 
     fun updateGoal(goal: Goal): Boolean {

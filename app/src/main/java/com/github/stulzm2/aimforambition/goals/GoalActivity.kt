@@ -1,12 +1,15 @@
 package com.github.stulzm2.aimforambition.goals
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.CoordinatorLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import android.widget.DatePicker
+import android.widget.Toast
+import com.github.stulzm2.aimforambition.MainActivity
 import com.github.stulzm2.aimforambition.R
 import com.github.stulzm2.aimforambition.database.DatabaseHandler
 import com.github.stulzm2.aimforambition.models.Goal
@@ -22,17 +25,19 @@ class GoalActivity : AppCompatActivity() {
     private var dbHandler: DatabaseHandler? = null
     private var isEditMode = false
     private var cal = Calendar.getInstance()
+    private lateinit var coordinatorLayout: CoordinatorLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_goal)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         isChecked()
         initDB()
         initOperations()
     }
 
-    fun isChecked() {
+    private fun isChecked() {
         simpleswitch_deadline.setOnCheckedChangeListener { _ , isChecked ->
             if (isChecked) {
                 button_dialog.visibility = View.VISIBLE
@@ -93,13 +98,15 @@ class GoalActivity : AppCompatActivity() {
                     .setPositiveButton("YES", { dialog, _ ->
                         val success = dbHandler?.deleteGoal(intent.getIntExtra("Id", 0)) as Boolean
                         if (success)
-                            finish()
+                            onPositiveButtonClicked()
+                        //finish()
                         dialog.dismiss()
                     })
                     .setNegativeButton("NO", { dialog, _ ->
                         dialog.dismiss()
                     })
             dialog.show()
+
         })
 
         val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
@@ -117,6 +124,12 @@ class GoalActivity : AppCompatActivity() {
                     cal.get(Calendar.MONTH),
                     cal.get(Calendar.DAY_OF_MONTH)).show()
         }
+    }
+
+    private fun onPositiveButtonClicked() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("deletion", "success")
+        startActivity(intent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
