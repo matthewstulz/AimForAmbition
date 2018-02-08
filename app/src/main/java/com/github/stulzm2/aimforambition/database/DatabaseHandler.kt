@@ -10,7 +10,6 @@ import java.util.ArrayList
 /**
  * Created by matthewstulz on 2/5/18.
  */
-
 class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHandler.DB_NAME, null, DatabaseHandler.DB_VERSION) {
 
     companion object {

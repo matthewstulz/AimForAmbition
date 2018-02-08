@@ -16,13 +16,15 @@ import com.github.stulzm2.aimforambition.models.Goal
 
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * Created by matthewstulz on 2/4/18.
+ */
 class MainActivity : AppCompatActivity() {
 
-    private var taskRecyclerAdapter: GoalAdapter? = null;
-    private var recyclerView: RecyclerView? = null
-    private var dbHandler: DatabaseHandler? = null
-    private var listTasks: List<Goal> = ArrayList<Goal>()
-    private var linearLayoutManager: LinearLayoutManager? = null
+    private lateinit var goalRecyclerAdapter: GoalAdapter
+    private lateinit var dbHandler: DatabaseHandler
+    private var listTasks: List<Goal> = ArrayList()
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,18 +36,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun initDB() {
         dbHandler = DatabaseHandler(this)
-        listTasks = (dbHandler as DatabaseHandler).goal()
-        taskRecyclerAdapter = GoalAdapter(goalList = listTasks, context = applicationContext)
-        (recyclerView as RecyclerView).adapter = taskRecyclerAdapter
+        listTasks = dbHandler.goal()
+        goalRecyclerAdapter = GoalAdapter(goalList = listTasks, context = applicationContext)
+        recycler_view.adapter = goalRecyclerAdapter
     }
 
     private fun initViews() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        recyclerView = findViewById(R.id.recycler_view)
-        taskRecyclerAdapter = GoalAdapter(goalList = listTasks, context = applicationContext)
-        linearLayoutManager = LinearLayoutManager(applicationContext)
-        (recyclerView as RecyclerView).layoutManager = linearLayoutManager
+        goalRecyclerAdapter = GoalAdapter(goalList = listTasks, context = applicationContext)
+        linearLayoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = linearLayoutManager
     }
 
     private fun initOperations() {
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     private fun snackBarCheck() {
         if (intent.extras != null) {
             if (intent.getStringExtra("deletion") == "success") {
-                Snackbar.make(cl_main, "Goal has been deleted", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(cl_main, "Goal successfully deleted", Snackbar.LENGTH_LONG).show()
             }
         }
     }
