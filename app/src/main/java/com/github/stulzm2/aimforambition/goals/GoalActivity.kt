@@ -44,7 +44,6 @@ class GoalActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun initDB() {
         dbHandler = DatabaseHandler(this)
         button_delete_goal.visibility = View.GONE
@@ -59,8 +58,8 @@ class GoalActivity : AppCompatActivity() {
             textview_date.text = goal.date
 
             simpleswitch_deadline.isChecked = true
-            button_add_goal.text = "SAVE\nGOAL"
-            button_dialog.text = "CHANGE\nDATE"
+            button_add_goal.text = getString(R.string.save_goal)
+            button_dialog.text = getString(R.string.change_date)
             button_delete_goal.visibility = View.VISIBLE
         }
     }
