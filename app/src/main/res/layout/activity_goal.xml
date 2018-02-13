@@ -22,8 +22,7 @@
             android:id="@+id/textinputlayout_goal"
             android:layout_margin="12dp"
             app:hintTextAppearance="@android:style/TextAppearance.Large"
-            android:theme="@style/TextLabel"
-            >
+            android:theme="@style/TextLabel">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
