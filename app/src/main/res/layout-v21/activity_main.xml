@@ -27,7 +27,7 @@
         app:borderWidth="0dp"
         app:elevation="8dp"
         app:fabSize="normal"
-        android:background="@color/colorAccent"
+        android:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_add"
         android:tint="@android:color/white"/>
 

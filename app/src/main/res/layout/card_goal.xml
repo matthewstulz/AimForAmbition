@@ -7,7 +7,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
     card_view:cardCornerRadius="6dp"
-    card_view:cardBackgroundColor="#FFF">
+    card_view:cardBackgroundColor="#FFF"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,7 +25,8 @@
             android:textStyle="bold"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@string/app_name" />
+            android:text="@string/app_name"
+            android:layout_marginStart="10dp" />
 
         <TextView
             android:id="@+id/card_goal_deadline"
@@ -37,7 +39,9 @@
             android:layout_toRightOf="@id/card_goal_text"
             android:gravity="end"
             android:textStyle="bold"
-            android:text="December 19, 2018" />
+            android:text="@string/date"
+            android:layout_marginEnd="10dp"
+            android:layout_toEndOf="@id/card_goal_text" />
 
 
         <TextView
@@ -49,7 +53,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_below="@+id/card_goal_text"
-            android:text="Description" />
+            android:text="@string/description" />
 
     </RelativeLayout>
 
