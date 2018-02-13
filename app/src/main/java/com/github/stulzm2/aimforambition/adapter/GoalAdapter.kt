@@ -2,10 +2,12 @@ package com.github.stulzm2.aimforambition.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.github.stulzm2.aimforambition.R
 import com.github.stulzm2.aimforambition.goals.GoalActivity
@@ -32,6 +34,11 @@ class GoalAdapter(goalList: List<Goal>, private var context: Context) : Recycler
         holder.title.text = goals.title
         holder.description.text = goals.description
         holder.date.text = goals.date
+        when {
+            goals.priority == "Low" -> holder.itemView.setBackgroundColor(Color.parseColor("#F5EFE0"))
+            goals.priority == "Medium" -> holder.itemView.setBackgroundColor(Color.parseColor("#EADFBF"))
+            else -> holder.itemView.setBackgroundColor(Color.parseColor("#D6C485"))
+        }
         holder.priority.text = goals.priority
 
         holder.itemView.setOnClickListener {
