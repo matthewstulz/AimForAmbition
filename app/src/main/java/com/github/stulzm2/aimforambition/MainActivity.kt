@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.github.stulzm2.aimforambition.adapter.GoalAdapter
 import com.github.stulzm2.aimforambition.database.DatabaseHandler
 import com.github.stulzm2.aimforambition.goals.GoalActivity
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         listTasks = dbHandler.goal()
         goalRecyclerAdapter = GoalAdapter(goalList = listTasks, context = applicationContext)
         recycler_view.adapter = goalRecyclerAdapter
+        emptyViewCheck()
     }
 
     private fun initViews() {
@@ -53,6 +55,16 @@ class MainActivity : AppCompatActivity() {
             val i = Intent(applicationContext, GoalActivity::class.java)
             i.putExtra("Mode", "A")
             startActivity(i)
+        }
+    }
+
+    private fun emptyViewCheck() {
+        if (recycler_view.adapter.itemCount == 0) {
+            recycler_view.visibility = View.INVISIBLE
+            tv_no_data.visibility = View.VISIBLE
+        } else {
+            recycler_view.visibility = View.VISIBLE
+            tv_no_data.visibility = View.GONE
         }
     }
 

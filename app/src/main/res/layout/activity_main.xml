@@ -10,6 +10,16 @@
     android:layoutAnimation="@anim/layout_animation_fall_down"
     android:id="@+id/cl_main">
 
+    <TextView
+        android:id="@+id/tv_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_goals"
+        android:textSize="20sp"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:visibility="invisible" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
