@@ -15,6 +15,9 @@ import com.github.stulzm2.aimforambition.models.Goal
 import kotlinx.android.synthetic.main.activity_goal.*
 import java.text.SimpleDateFormat
 import java.util.*
+import android.content.DialogInterface
+
+
 
 /**
  * Created by matthewstulz on 2/4/18.
@@ -42,22 +45,28 @@ class GoalActivity : AppCompatActivity() {
                 button_dialog.visibility = View.GONE
             }
         }
+        simpleswitch_priority.setOnCheckedChangeListener { _ , isChecked ->
+            if (isChecked) {
+                button_priority_goal.visibility = View.VISIBLE
+            } else {
+                button_priority_goal.visibility = View.GONE
+            }
+        }
     }
 
     private fun initDB() {
         dbHandler = DatabaseHandler(this)
         button_delete_goal.visibility = View.GONE
         supportActionBar?.title = "New Goal"
-        textview_date!!.text = "--/--/----"
+        textview_date!!.text = ""
         if (intent != null && intent.getStringExtra("Mode") == "E") {
             isEditMode = true
             supportActionBar?.title = "Edit Goal"
             val goal: Goal = dbHandler!!.getGoal(intent.getIntExtra("Id",0))
             textinput_goal.setText(goal.title)
             textinput_description.setText(goal.description)
-            textview_date.text = goal.date
-
-            simpleswitch_deadline.isChecked = true
+            //textview_date.text = goal.date
+            simpleswitch_deadline.isChecked = goal.date != ""
             button_add_goal.text = getString(R.string.save_goal)
             button_dialog.text = getString(R.string.change_date)
             button_delete_goal.visibility = View.VISIBLE
@@ -88,7 +97,9 @@ class GoalActivity : AppCompatActivity() {
         })
 
         button_delete_goal.setOnClickListener({
-            val dialog = AlertDialog.Builder(this).setTitle("DANGER ZONE!").setMessage("Click 'YES' to delete the goal.")
+            val dialog = AlertDialog.Builder(this)
+                    .setTitle("DANGER ZONE!")
+                    .setMessage("Click 'YES' to delete the goal.")
                     .setPositiveButton("YES", { dialog, _ ->
                         val success = dbHandler?.deleteGoal(intent.getIntExtra("Id", 0)) as Boolean
                         if (success)
@@ -116,6 +127,23 @@ class GoalActivity : AppCompatActivity() {
                     cal.get(Calendar.YEAR),
                     cal.get(Calendar.MONTH),
                     cal.get(Calendar.DAY_OF_MONTH)).show()
+        }
+
+        button_priority_goal.setOnClickListener {
+            val singleChoiceItems = resources.getStringArray(R.array.dialog_single_choice_priority_array)
+            val itemSelected = 0
+            AlertDialog.Builder(this)
+                    .setTitle("Priority")
+                    .setSingleChoiceItems(singleChoiceItems, itemSelected) { _ , selectedIndex ->
+                        when (selectedIndex) {
+                            0 -> { textview_priority.text = singleChoiceItems[0] }
+                            1 -> { textview_priority.text = singleChoiceItems[1] }
+                            2 -> { textview_priority.text = singleChoiceItems[2] }
+                        }
+                    }
+                    .setPositiveButton("Ok", null)
+                    .setNegativeButton("Cancel", null)
+                    .show()
         }
     }
 

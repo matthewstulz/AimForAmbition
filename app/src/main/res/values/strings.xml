@@ -8,12 +8,14 @@
     <string name="delete_goal">DELETE GOAL</string>
     <string name="save_goal">SAVE GOAL</string>
     <string name="change_date">CHANGE DATE</string>
-    <string name="switch_deadline">END DATE</string>
-    <string name="goal_deadline">Goal Deadline</string>
+    <string name="switch_deadline">CHOOSE DATE</string>
+    <string name="goal_deadline">Goal deadline</string>
     <string name="enter_goal">Enter goal</string>
     <string name="enter_description">Enter description</string>
     <string name="description">Description</string>
     <string name="date">06/12/2018</string>
     <string name="no_goals">No goals were found</string>
+    <string name="goal_priority">Change priority</string>
+    <string name="choose_priority">CHOOSE PRIORITY</string>
 
 </resources>
