@@ -14,8 +14,10 @@
     <string name="enter_description">Enter description</string>
     <string name="description">Description</string>
     <string name="date">06/12/2018</string>
+    <string name="priority">Low</string>
     <string name="no_goals">No goals were found</string>
     <string name="goal_priority">Change priority</string>
     <string name="choose_priority">CHOOSE PRIORITY</string>
+    <string name="low">Low</string>
 
 </resources>

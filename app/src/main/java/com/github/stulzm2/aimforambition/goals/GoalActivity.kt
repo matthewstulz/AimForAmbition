@@ -1,6 +1,5 @@
 package com.github.stulzm2.aimforambition.goals
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -15,8 +14,6 @@ import com.github.stulzm2.aimforambition.models.Goal
 import kotlinx.android.synthetic.main.activity_goal.*
 import java.text.SimpleDateFormat
 import java.util.*
-import android.content.DialogInterface
-
 
 
 /**
@@ -59,6 +56,7 @@ class GoalActivity : AppCompatActivity() {
         button_delete_goal.visibility = View.GONE
         supportActionBar?.title = "New Goal"
         textview_date!!.text = ""
+        textview_priority.text = resources.getString(R.string.low)
         if (intent != null && intent.getStringExtra("Mode") == "E") {
             isEditMode = true
             supportActionBar?.title = "Edit Goal"
@@ -66,7 +64,9 @@ class GoalActivity : AppCompatActivity() {
             textinput_goal.setText(goal.title)
             textinput_description.setText(goal.description)
             //textview_date.text = goal.date
+            //textview_priority.text = goal.priority
             simpleswitch_deadline.isChecked = goal.date != ""
+            simpleswitch_priority.isChecked = goal.priority != ""
             button_add_goal.text = getString(R.string.save_goal)
             button_dialog.text = getString(R.string.change_date)
             button_delete_goal.visibility = View.VISIBLE
@@ -81,6 +81,7 @@ class GoalActivity : AppCompatActivity() {
                 goal.title = textinput_goal.text.toString()
                 goal.description = textinput_description.text.toString()
                 goal.date = textview_date.text.toString()
+                goal.priority = textview_priority.text.toString()
 
                 success = dbHandler?.addGoal(goal) as Boolean
             } else {
@@ -89,6 +90,7 @@ class GoalActivity : AppCompatActivity() {
                 goal.title = textinput_goal.text.toString()
                 goal.description = textinput_description.text.toString()
                 goal.date = textview_date.text.toString()
+                goal.priority = textview_priority.text.toString()
 
                 success = dbHandler?.updateGoal(goal) as Boolean
             }

@@ -9,135 +9,141 @@
     android:id="@+id/coordinatorLayout"
     tools:context="com.github.stulzm2.aimforambition.goals.GoalActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textinputlayout_goal"
-            android:layout_margin="12dp"
-            app:hintTextAppearance="@android:style/TextAppearance.Large"
-            android:theme="@style/TextLabel">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textinput_goal"
-                android:hint="@string/enter_goal"
-                android:textSize="14sp"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textinputlayout_description"
-            android:layout_margin="12dp"
-            app:hintTextAppearance="@android:style/TextAppearance.Large"
-            android:theme="@style/TextLabel">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textinput_description"
-                android:hint="@string/enter_description"
-                android:textSize="14sp"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <Switch
-            android:id="@+id/simpleswitch_deadline"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:switchMinWidth="50dp"
-            android:layout_margin="20dp"
-            android:text="@string/goal_deadline"
-            android:textSize="22sp"
-            android:checked="false"
-            android:gravity="start"
-            android:textOff="@string/off"
-            android:textOn="@string/on" />
-
-        <TextView
-            android:id="@+id/textview_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
-
-        <Switch
-            android:id="@+id/simpleswitch_priority"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:switchMinWidth="50dp"
-            android:layout_margin="20dp"
-            android:text="@string/goal_priority"
-            android:textSize="22sp"
-            android:checked="false"
-            android:gravity="start"
-            android:textOff="@string/off"
-            android:textOn="@string/on" />
-
-        <TextView
-            android:id="@+id/textview_priority"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_gravity="center">
+            android:layout_marginTop="20dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <Button
-                android:id="@+id/button_delete_goal"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="@string/delete_goal"
-                android:visibility="gone"
-                android:textColor="@android:color/white"
-                android:background="@drawable/rounded_button"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:id="@+id/textinputlayout_goal"
+                android:layout_margin="12dp"
+                app:hintTextAppearance="@android:style/TextAppearance.Large"
+                android:theme="@style/TextLabel">
 
-            <Button
-                android:id="@+id/button_dialog"
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textinput_goal"
+                    android:hint="@string/enter_goal"
+                    android:textSize="14sp"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="@string/switch_deadline"
-                android:visibility="gone"
-                android:textColor="@android:color/white"
-                android:background="@drawable/rounded_button"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:id="@+id/textinputlayout_description"
+                android:layout_margin="12dp"
+                app:hintTextAppearance="@android:style/TextAppearance.Large"
+                android:theme="@style/TextLabel">
 
-            <Button
-                android:id="@+id/button_priority_goal"
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textinput_description"
+                    android:hint="@string/enter_description"
+                    android:textSize="14sp"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Switch
+                android:id="@+id/simpleswitch_deadline"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:switchMinWidth="50dp"
+                android:layout_margin="20dp"
+                android:text="@string/goal_deadline"
+                android:textSize="22sp"
+                android:checked="false"
+                android:gravity="start"
+                android:textOff="@string/off"
+                android:textOn="@string/on" />
+
+            <TextView
+                android:id="@+id/textview_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <Switch
+                android:id="@+id/simpleswitch_priority"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:switchMinWidth="50dp"
+                android:layout_margin="20dp"
+                android:text="@string/goal_priority"
+                android:textSize="22sp"
+                android:checked="false"
+                android:gravity="start"
+                android:textOff="@string/off"
+                android:textOn="@string/on" />
+
+            <TextView
+                android:id="@+id/textview_priority"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="@string/choose_priority"
-                android:visibility="gone"
-                android:textColor="@android:color/white"
-                android:background="@drawable/rounded_button"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:layout_margin="20dp"
+                android:orientation="vertical"
+                android:layout_gravity="center">
 
-            <Button
-                android:id="@+id/button_add_goal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="@string/add_goal"
-                android:textColor="@android:color/white"
-                android:background="@drawable/rounded_button"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                <Button
+                    android:id="@+id/button_delete_goal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="@string/delete_goal"
+                    android:visibility="gone"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/rounded_button"
+                    android:foreground="?android:attr/selectableItemBackground"/>
 
+                <Button
+                    android:id="@+id/button_dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="@string/switch_deadline"
+                    android:visibility="gone"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/rounded_button"
+                    android:foreground="?android:attr/selectableItemBackground"/>
+
+                <Button
+                    android:id="@+id/button_priority_goal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="@string/choose_priority"
+                    android:visibility="gone"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/rounded_button"
+                    android:foreground="?android:attr/selectableItemBackground"/>
+
+                <Button
+                    android:id="@+id/button_add_goal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="@string/add_goal"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/rounded_button"
+                    android:foreground="?android:attr/selectableItemBackground"/>
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

@@ -32,6 +32,7 @@ class GoalAdapter(goalList: List<Goal>, private var context: Context) : Recycler
         holder.title.text = goals.title
         holder.description.text = goals.description
         holder.date.text = goals.date
+        holder.priority.text = goals.priority
 
         holder.itemView.setOnClickListener {
             val i = Intent(context, GoalActivity::class.java)
@@ -50,5 +51,6 @@ class GoalAdapter(goalList: List<Goal>, private var context: Context) : Recycler
         var title: TextView = view.findViewById(R.id.card_goal_text) as TextView
         var description: TextView = view.findViewById(R.id.card_goal_description) as TextView
         var date: TextView = view.findViewById(R.id.card_goal_deadline) as TextView
+        var priority: TextView = view.findViewById(R.id.card_goal_priority) as TextView
     }
 }

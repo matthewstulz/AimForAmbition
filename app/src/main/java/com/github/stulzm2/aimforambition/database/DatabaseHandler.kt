@@ -13,16 +13,17 @@ import java.util.ArrayList
 class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHandler.DB_NAME, null, DatabaseHandler.DB_VERSION) {
 
     companion object {
-        private val DB_VERSION = 1
+        private val DB_VERSION = 2
         private val DB_NAME = "MyGoals"
         private val TABLE_NAME = "Goals"
         private val COLUMN_ID = "Id"
         private val COLUMN_TITLE = "Title"
         private val COLUMN_DESCRIPTION = "Description"
-        private val COLUMN_DATE = "Date"}
+        private val COLUMN_DATE = "Date"
+        private val COLUMN_PRIORITY = "Priority"}
 
     override fun onCreate(db: SQLiteDatabase) {
-        val CREATE_TABLE = "CREATE TABLE $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY, $COLUMN_TITLE TEXT, $COLUMN_DESCRIPTION TEXT, $COLUMN_DATE)"
+        val CREATE_TABLE = "CREATE TABLE $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY, $COLUMN_TITLE TEXT, $COLUMN_DESCRIPTION TEXT, $COLUMN_DATE TEXT, $COLUMN_PRIORITY TEXT)"
         db.execSQL(CREATE_TABLE)
     }
 
@@ -38,6 +39,7 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
         values.put(COLUMN_TITLE, goal.title)
         values.put(COLUMN_DESCRIPTION, goal.description)
         values.put(COLUMN_DATE, goal.date)
+        values.put(COLUMN_PRIORITY, goal.priority)
         val result = db.insert(TABLE_NAME, null, values)
         db.close()
         return "$result".toInt() != -1
@@ -54,6 +56,7 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
         goal.title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
         goal.description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
         goal.date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
+        goal.priority = cursor.getString(cursor.getColumnIndex(COLUMN_PRIORITY))
         cursor.close()
         return goal
     }
@@ -66,12 +69,13 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
-                    val goals = Goal()
-                    goals.id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_ID)))
-                    goals.title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
-                    goals.description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
-                    goals.date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
-                    goalList.add(goals)
+                    val goal = Goal()
+                    goal.id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_ID)))
+                    goal.title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
+                    goal.description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
+                    goal.date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
+                    goal.priority = cursor.getString(cursor.getColumnIndex(COLUMN_PRIORITY))
+                    goalList.add(goal)
                 } while (cursor.moveToNext())
             }
         }
@@ -85,6 +89,7 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
         values.put(COLUMN_TITLE, goal.title)
         values.put(COLUMN_DESCRIPTION, goal.description)
         values.put(COLUMN_DATE, goal.date)
+        values.put(COLUMN_PRIORITY, goal.priority)
         val result = db.update(TABLE_NAME, values, COLUMN_ID + "=?", arrayOf(goal.id.toString())).toLong()
         db.close()
         return "$result".toInt() != -1
