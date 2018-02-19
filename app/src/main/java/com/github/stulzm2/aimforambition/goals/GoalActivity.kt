@@ -1,6 +1,7 @@
 package com.github.stulzm2.aimforambition.goals
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -14,6 +15,8 @@ import com.github.stulzm2.aimforambition.models.Goal
 import kotlinx.android.synthetic.main.activity_goal.*
 import java.text.SimpleDateFormat
 import java.util.*
+import android.view.inputmethod.InputMethodManager
+import android.view.WindowManager
 
 
 /**
@@ -29,7 +32,6 @@ class GoalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_goal)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        isChecked()
         initDB()
         initOperations()
     }
@@ -38,6 +40,7 @@ class GoalActivity : AppCompatActivity() {
         simpleswitch_deadline.setOnCheckedChangeListener { _ , isChecked ->
             if (isChecked) {
                 button_dialog.visibility = View.VISIBLE
+                hideSoftKeyboard()
             } else {
                 button_dialog.visibility = View.GONE
             }
@@ -45,9 +48,17 @@ class GoalActivity : AppCompatActivity() {
         simpleswitch_priority.setOnCheckedChangeListener { _ , isChecked ->
             if (isChecked) {
                 button_priority_goal.visibility = View.VISIBLE
+                hideSoftKeyboard()
             } else {
                 button_priority_goal.visibility = View.GONE
             }
+        }
+    }
+
+    private fun hideSoftKeyboard() {
+        if (currentFocus != null) {
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
         }
     }
 
@@ -57,9 +68,12 @@ class GoalActivity : AppCompatActivity() {
         supportActionBar?.title = "New Goal"
         textview_date!!.text = ""
         textview_priority.text = resources.getString(R.string.low)
+        isChecked()
         if (intent != null && intent.getStringExtra("Mode") == "E") {
             isEditMode = true
             supportActionBar?.title = "Edit Goal"
+            // Hides keyboard on initial view inflate when editing a goal
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
             val goal: Goal = dbHandler!!.getGoal(intent.getIntExtra("Id",0))
             textinput_goal.setText(goal.title)
             textinput_description.setText(goal.description)
