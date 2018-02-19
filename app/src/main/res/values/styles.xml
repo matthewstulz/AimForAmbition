@@ -9,6 +9,13 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
+    <style name="NightMode" parent="CardView.Dark">
+        <item name="colorPrimary">#000</item>
+        <item name="colorPrimaryDark">#000</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

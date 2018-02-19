@@ -21,12 +21,15 @@
         <activity
             android:name=".goals.GoalActivity"
             android:label="New Goal"
-            android:theme="@style/AppTheme.ActionBar.TitleTextStyle"/>
+            android:theme="@style/AppTheme.ActionBar.TitleTextStyle" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/about"
+            android:theme="@style/AppTheme.ActionBar.TitleTextStyle" />
     </application>
 
 </manifest>

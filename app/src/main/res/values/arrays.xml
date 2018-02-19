@@ -5,4 +5,15 @@
         <item>Medium</item>
         <item>High</item>
     </string-array>
+
+    <string-array name="dialog_single_choice_sort_array">
+        <item>Date Added</item>
+        <item>Goal Deadline</item>
+        <item>Priority</item>
+    </string-array>
+
+    <string-array name="dialog_single_choice_theme_array">
+        <item>ON</item>
+        <item>OFF</item>
+    </string-array>
 </resources>

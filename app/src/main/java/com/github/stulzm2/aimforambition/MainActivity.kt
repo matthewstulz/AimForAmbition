@@ -3,16 +3,20 @@ package com.github.stulzm2.aimforambition
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import com.github.stulzm2.aimforambition.adapter.GoalAdapter
 import com.github.stulzm2.aimforambition.database.DatabaseHandler
 import com.github.stulzm2.aimforambition.goals.GoalActivity
 import com.github.stulzm2.aimforambition.models.Goal
+import kotlinx.android.synthetic.main.activity_goal.*
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,12 +27,17 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var goalRecyclerAdapter: GoalAdapter
     private lateinit var dbHandler: DatabaseHandler
-    private var listTasks: List<Goal> = ArrayList()
+    private var listGoals: List<Goal> = ArrayList()
     private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var sortGoals: String
+    private lateinit var nightMode: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+//            setTheme(R.style.NightMode)
+//        }
         initViews()
         initOperations()
         snackBarCheck()
@@ -36,8 +45,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initDB() {
         dbHandler = DatabaseHandler(this)
-        listTasks = dbHandler.goal()
-        goalRecyclerAdapter = GoalAdapter(goalList = listTasks, context = applicationContext)
+        listGoals = dbHandler.goal()
+        goalRecyclerAdapter = GoalAdapter(goalList = listGoals, context = applicationContext)
         recycler_view.adapter = goalRecyclerAdapter
         emptyViewCheck()
     }
@@ -45,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        goalRecyclerAdapter = GoalAdapter(goalList = listTasks, context = applicationContext)
+        goalRecyclerAdapter = GoalAdapter(goalList = listGoals, context = applicationContext)
         linearLayoutManager = LinearLayoutManager(this)
         recycler_view.layoutManager = linearLayoutManager
     }
@@ -83,18 +92,59 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-        if (id == R.id.action_delete) {
-            val dialog = android.support.v7.app.AlertDialog.Builder(this).setTitle("DANGER ZONE!").setMessage("Click 'YES' to delete all goals")
-                    .setPositiveButton("YES", { dialog, i ->
-                        dbHandler!!.deleteAllGoals()
-                        initDB()
-                        dialog.dismiss()
-                    })
-                    .setNegativeButton("NO", { dialog, i ->
-                        dialog.dismiss()
-                    })
-            dialog.show()
-            return true
+        when (id) {
+            R.id.action_delete -> {
+                val dialog = android.support.v7.app.AlertDialog.Builder(this).setTitle("DANGER ZONE!").setMessage("Click 'YES' to delete all goals")
+                        .setPositiveButton("YES", { dialog, _ ->
+                            dbHandler.deleteAllGoals()
+                            initDB()
+                            dialog.dismiss()
+                        })
+                        .setNegativeButton("NO", { dialog, _ ->
+                            dialog.dismiss()
+                        })
+                dialog.show()
+                return true
+            }
+            R.id.sort_settings -> {
+                val singleChoiceItems = resources.getStringArray(R.array.dialog_single_choice_sort_array)
+                val itemSelected = 0
+                AlertDialog.Builder(this)
+                        .setTitle("Sort by")
+                        .setSingleChoiceItems(singleChoiceItems, itemSelected) { _ , selectedIndex ->
+                            when (selectedIndex) {
+                                0 -> { sortGoals = singleChoiceItems[0] }
+                                1 -> { sortGoals = singleChoiceItems[1] }
+                                2 -> { sortGoals = singleChoiceItems[2] }
+                            }
+                        }
+                        .setPositiveButton("Ok", null)
+                        .setNegativeButton("Cancel", null)
+                        .show()
+            }
+            R.id.theme_settings -> {
+                val singleChoiceItems = resources.getStringArray(R.array.dialog_single_choice_theme_array)
+                val itemSelected = 0
+                AlertDialog.Builder(this)
+                        .setTitle("Night mode")
+                        .setSingleChoiceItems(singleChoiceItems, itemSelected) { _ , selectedIndex ->
+                            when (selectedIndex) {
+                                0 -> { nightMode = singleChoiceItems[0]
+//                                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                                }
+                                1 -> { nightMode = singleChoiceItems[1]
+//                                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                                }
+                            }
+                        }
+                        .setPositiveButton("Ok", null)
+                        .setNegativeButton("Cancel", null)
+                        .show()
+            }
+            R.id.about_settings -> {
+                val i = Intent(applicationContext, AboutActivity::class.java)
+                startActivity(i)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
