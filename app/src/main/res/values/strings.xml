@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">AimForAmbition</string>
     <string name="action_settings">Settings</string>
+    <string name="about_settings">About</string>
+    <string name="sort_settings">Sort by</string>
+    <string name="theme_settings">Theme</string>
     <string name="action_delete">Delete All</string>
     <string name="on">on</string>
     <string name="off">off</string>
