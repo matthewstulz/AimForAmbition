@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.text.TextUtils
 import com.github.stulzm2.aimforambition.models.Goal
 import java.util.ArrayList
 
@@ -33,9 +34,18 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DatabaseHand
         onCreate(db)
     }
 
+    private fun checkEmpty(string: String): Boolean {
+        if (TextUtils.isEmpty(string)) {
+            return true
+        }
+        return false
+    }
+
     fun addGoal(goal: Goal): Boolean {
         val db = this.writableDatabase
         val values = ContentValues()
+        if (checkEmpty(goal.title))
+            return false
         values.put(COLUMN_TITLE, goal.title)
         values.put(COLUMN_DESCRIPTION, goal.description)
         values.put(COLUMN_DATE, goal.date)

@@ -17,7 +17,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.view.inputmethod.InputMethodManager
 import android.view.WindowManager
-
+import android.text.Editable
+import android.text.TextWatcher
 
 /**
  * Created by matthewstulz on 2/4/18.
@@ -87,6 +88,14 @@ class GoalActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkTitle(string: Editable) {
+        if (string.toString().trim { it <= ' ' }.isNotEmpty()) {
+            textinputlayout_goal.isErrorEnabled = false
+        } else {
+            textinputlayout_goal.error = "Goal cannot be empty"
+        }
+    }
+
     private fun initOperations() {
         button_add_goal.setOnClickListener({
             val success: Boolean
@@ -110,6 +119,21 @@ class GoalActivity : AppCompatActivity() {
             }
             if (success)
                 finish()
+            else {
+                textinputlayout_goal.error = "Goal cannot be empty"
+            }
+
+            textinput_goal.addTextChangedListener(object : TextWatcher {
+                override fun onTextChanged(string: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun beforeTextChanged(string: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+
+                override fun afterTextChanged(string: Editable) {
+                    checkTitle(string)
+                }
+            })
         })
 
         button_delete_goal.setOnClickListener({

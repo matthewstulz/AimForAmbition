@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="20dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -34,7 +34,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/textinput_goal"
                     android:hint="@string/enter_goal"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:textColorHighlight="@color/colorAccent"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -51,7 +52,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/textinput_description"
                     android:hint="@string/enter_description"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:textColorHighlight="@color/colorAccent"/>
 
             </android.support.design.widget.TextInputLayout>
 
