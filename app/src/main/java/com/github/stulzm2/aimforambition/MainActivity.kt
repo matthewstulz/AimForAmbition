@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import com.github.stulzm2.aimforambition.adapter.GoalAdapter
 import com.github.stulzm2.aimforambition.database.DatabaseHandler
 import com.github.stulzm2.aimforambition.goals.GoalActivity
