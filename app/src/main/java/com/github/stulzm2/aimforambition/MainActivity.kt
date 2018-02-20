@@ -97,6 +97,7 @@ class MainActivity : AppCompatActivity() {
                             dbHandler.deleteAllGoals()
                             initDB()
                             dialog.dismiss()
+                            Snackbar.make(cl_main, "All goals successfully deleted", Snackbar.LENGTH_LONG).show()
                         })
                         .setNegativeButton("NO", { dialog, _ ->
                             dialog.dismiss()
