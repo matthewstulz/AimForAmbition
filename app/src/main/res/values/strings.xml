@@ -22,5 +22,11 @@
     <string name="goal_priority">Change priority</string>
     <string name="choose_priority">CHOOSE PRIORITY</string>
     <string name="low">Low</string>
+    <string name="label_github">Github:\u0020</string>
+    <string name="label_contact">Contact info:\u0020</string>
+    <string name="label_logo">Logo:\u0020</string>
+    <string name="url_logo">https://www.canva.com/design/DACu0P4sl0M/U531lgmFIAxXA3niLIFOWg/edit</string>
+    <string name="url_github">https://github.com/stulzm2/AimForAmbition</string>
+    <string name="email">mstulz2@gmail.com</string>
 
 </resources>
