@@ -113,13 +113,22 @@ class MainActivity : AppCompatActivity() {
                         .setSingleChoiceItems(singleChoiceItems, itemSelected) { _ , selectedIndex ->
                             when (selectedIndex) {
                                 0 -> { sortGoals = singleChoiceItems[0]
-                                    listGoals = originalOrder
+                                    listGoals = listGoals.sortedWith(compareBy({ it.id }))
                                 }
                                 1 -> { sortGoals = singleChoiceItems[1]
                                     listGoals = listGoals.sortedWith(compareBy({ it.date }))
                                 }
                                 2 -> { sortGoals = singleChoiceItems[2]
-                                    listGoals = listGoals.sortedWith(compareBy({ it.priority }))
+                                    Collections.sort(listGoals, Comparator<Goal> { m1, m2 ->
+                                        val p1 = m1.priority
+                                        val p2 = m2.priority
+                                        if (p1 == p2) return@Comparator 0
+                                        if (p1 == "Low" && (p2 == "Medium" || p2 == "High"))
+                                            return@Comparator -1
+                                        if (p1 == "Medium" && p2 == "High")
+                                            return@Comparator -1
+                                        1
+                                    })
                                 }
                             }
                         }

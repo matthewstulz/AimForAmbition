@@ -10,4 +10,5 @@ class Goal {
     var description: String = ""
     var date: String = ""
     var priority: String = ""
+
 }
