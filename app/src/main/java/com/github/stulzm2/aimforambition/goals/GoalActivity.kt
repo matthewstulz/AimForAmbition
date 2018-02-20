@@ -68,7 +68,7 @@ class GoalActivity : AppCompatActivity() {
         button_delete_goal.visibility = View.GONE
         supportActionBar?.title = "New Goal"
         textview_date!!.text = ""
-        textview_priority.text = resources.getString(R.string.low)
+        textview_priority.text = ""
         isChecked()
         if (intent != null && intent.getStringExtra("Mode") == "E") {
             isEditMode = true
@@ -78,8 +78,8 @@ class GoalActivity : AppCompatActivity() {
             val goal: Goal = dbHandler!!.getGoal(intent.getIntExtra("Id",0))
             textinput_goal.setText(goal.title)
             textinput_description.setText(goal.description)
-            //textview_date.text = goal.date
-            //textview_priority.text = goal.priority
+            textview_date.text = goal.date
+            textview_priority.text = goal.priority
             simpleswitch_deadline.isChecked = goal.date != ""
             simpleswitch_priority.isChecked = goal.priority != ""
             button_add_goal.text = getString(R.string.save_goal)

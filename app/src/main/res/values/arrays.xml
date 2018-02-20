@@ -11,9 +11,4 @@
         <item>Goal Deadline</item>
         <item>Priority</item>
     </string-array>
-
-    <string-array name="dialog_single_choice_theme_array">
-        <item>ON</item>
-        <item>OFF</item>
-    </string-array>
 </resources>

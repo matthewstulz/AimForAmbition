@@ -1,11 +1,11 @@
 package com.github.stulzm2.aimforambition
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.Menu
@@ -16,9 +16,9 @@ import com.github.stulzm2.aimforambition.adapter.GoalAdapter
 import com.github.stulzm2.aimforambition.database.DatabaseHandler
 import com.github.stulzm2.aimforambition.goals.GoalActivity
 import com.github.stulzm2.aimforambition.models.Goal
-import kotlinx.android.synthetic.main.activity_goal.*
-
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by matthewstulz on 2/4/18.
@@ -28,16 +28,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var goalRecyclerAdapter: GoalAdapter
     private lateinit var dbHandler: DatabaseHandler
     private var listGoals: List<Goal> = ArrayList()
+    private var originalOrder: List<Goal> = ArrayList()
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var sortGoals: String
-    private lateinit var nightMode: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-//            setTheme(R.style.NightMode)
-//        }
         initViews()
         initOperations()
         snackBarCheck()
@@ -49,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         goalRecyclerAdapter = GoalAdapter(goalList = listGoals, context = applicationContext)
         recycler_view.adapter = goalRecyclerAdapter
         emptyViewCheck()
+        originalOrder = listGoals
     }
 
     private fun initViews() {
@@ -106,6 +104,7 @@ class MainActivity : AppCompatActivity() {
                 dialog.show()
                 return true
             }
+
             R.id.sort_settings -> {
                 val singleChoiceItems = resources.getStringArray(R.array.dialog_single_choice_sort_array)
                 val itemSelected = 0
@@ -113,34 +112,25 @@ class MainActivity : AppCompatActivity() {
                         .setTitle("Sort by")
                         .setSingleChoiceItems(singleChoiceItems, itemSelected) { _ , selectedIndex ->
                             when (selectedIndex) {
-                                0 -> { sortGoals = singleChoiceItems[0] }
-                                1 -> { sortGoals = singleChoiceItems[1] }
-                                2 -> { sortGoals = singleChoiceItems[2] }
-                            }
-                        }
-                        .setPositiveButton("Ok", null)
-                        .setNegativeButton("Cancel", null)
-                        .show()
-            }
-            R.id.theme_settings -> {
-                val singleChoiceItems = resources.getStringArray(R.array.dialog_single_choice_theme_array)
-                val itemSelected = 0
-                AlertDialog.Builder(this)
-                        .setTitle("Night mode")
-                        .setSingleChoiceItems(singleChoiceItems, itemSelected) { _ , selectedIndex ->
-                            when (selectedIndex) {
-                                0 -> { nightMode = singleChoiceItems[0]
-//                                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                                0 -> { sortGoals = singleChoiceItems[0]
+                                    listGoals = originalOrder
                                 }
-                                1 -> { nightMode = singleChoiceItems[1]
-//                                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                                1 -> { sortGoals = singleChoiceItems[1]
+                                    listGoals = listGoals.sortedWith(compareBy({ it.date }))
+                                }
+                                2 -> { sortGoals = singleChoiceItems[2]
+                                    listGoals = listGoals.sortedWith(compareBy({ it.priority }))
                                 }
                             }
                         }
-                        .setPositiveButton("Ok", null)
+                        .setPositiveButton("Ok", { _ : DialogInterface, _ : Int ->
+                            goalRecyclerAdapter = GoalAdapter(goalList = listGoals, context = applicationContext)
+                            recycler_view.adapter = goalRecyclerAdapter
+                        })
                         .setNegativeButton("Cancel", null)
                         .show()
             }
+
             R.id.about_settings -> {
                 val i = Intent(applicationContext, AboutActivity::class.java)
                 startActivity(i)
