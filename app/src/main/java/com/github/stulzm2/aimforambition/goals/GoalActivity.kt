@@ -28,6 +28,7 @@ class GoalActivity : AppCompatActivity() {
     private var dbHandler: DatabaseHandler? = null
     private var isEditMode = false
     private var cal = Calendar.getInstance()
+    private var priority = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +86,11 @@ class GoalActivity : AppCompatActivity() {
             button_add_goal.text = getString(R.string.save_goal)
             button_dialog.text = getString(R.string.change_date)
             button_delete_goal.visibility = View.VISIBLE
+            if (goal.priority == "Medium") {
+                priority = 1
+            } else if (goal.priority == "High") {
+                priority = 2
+            }
         }
     }
 
@@ -104,7 +110,11 @@ class GoalActivity : AppCompatActivity() {
                 goal.title = textinput_goal.text.toString()
                 goal.description = textinput_description.text.toString()
                 goal.date = textview_date.text.toString()
-                goal.priority = textview_priority.text.toString()
+                if (textview_priority.text.toString().isEmpty()) {
+                    goal.priority = "High"
+                } else {
+                    goal.priority = textview_priority.text.toString()
+                }
 
                 success = dbHandler?.addGoal(goal) as Boolean
             } else {
@@ -114,6 +124,7 @@ class GoalActivity : AppCompatActivity() {
                 goal.description = textinput_description.text.toString()
                 goal.date = textview_date.text.toString()
                 goal.priority = textview_priority.text.toString()
+
 
                 success = dbHandler?.updateGoal(goal) as Boolean
             }
@@ -171,7 +182,7 @@ class GoalActivity : AppCompatActivity() {
 
         button_priority_goal.setOnClickListener {
             val singleChoiceItems = resources.getStringArray(R.array.dialog_single_choice_priority_array)
-            val itemSelected = 0
+            val itemSelected = priority
             AlertDialog.Builder(this)
                     .setTitle("Priority")
                     .setSingleChoiceItems(singleChoiceItems, itemSelected) { _ , selectedIndex ->
